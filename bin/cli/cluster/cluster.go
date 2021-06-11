@@ -38,10 +38,6 @@ func ClusterRuntimeImageTag(c *ClusterConf) string {
 	return ""
 }
 
-func RuntimeImageExists(c *ClusterConf) (bool, error) {
-	return true, nil
-}
-
 func clusterConfigDirSetup(name string, clusterConf *ClusterConf) error {
 	if name == "" {
 		return errors.New("cluster name cannot be blank")
