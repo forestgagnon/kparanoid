@@ -94,7 +94,7 @@ func (c *ClusterConf) EnsureRequiredContainerEnvFiles() error {
 func AddGKECluster(name string) error {
 	clusterConf := &ClusterConf{
 		Variant:        ClusterVariantGKE,
-		KubectlVersion: "1.21.1-00",
+		KubectlVersion: "1.27.3-00",
 		Name:           name,
 	}
 
@@ -120,7 +120,7 @@ func AddGKECluster(name string) error {
 func AddVanillaCluster(name string) error {
 	clusterConf := &ClusterConf{
 		Variant:        ClusterVariantVanilla,
-		KubectlVersion: "1.21.1-00",
+		KubectlVersion: "1.27.3-00",
 		Name:           name,
 	}
 
@@ -328,7 +328,7 @@ func PrintAvailableKubectlVersionsApt() error {
 	return cmd.Run()
 }
 
-const defaultAptKubectlVersion = "1.21.1-00"
+const defaultAptKubectlVersion = "1.27.3-00"
 
 func GetAptKubectlVersion(c *ClusterConf) string {
 	// Flags take precedence over the config file
