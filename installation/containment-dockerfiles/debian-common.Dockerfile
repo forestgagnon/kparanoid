@@ -10,19 +10,14 @@ RUN apt-get update && apt-get install -y \
   ca-certificates \
   vim \
   bash-completion \
-  gnupg
+  gnupg \
+  google-cloud-sdk-gke-gcloud-auth-plugin
+
 RUN git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install
 
-RUN mkdir -p /etc/apt/keyrings && \
-  curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | gpg --dearmor -o /etc/apt/keyrings/kubernetes-archive-keyring.gpg && \
-  echo "deb [signed-by=/etc/apt/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | tee /etc/apt/sources.list.d/kubernetes.list
-
-RUN echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && \
-  curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key --keyring /usr/share/keyrings/cloud.google.gpg add - && \
-  apt-get update && apt-get install -y google-cloud-sdk-gke-gcloud-auth-plugin
-
-ARG KUBECTL_VERSION=1.27.3-00
-RUN apt-get update && apt-get install -y kubectl=${KUBECTL_VERSION}
+ARG KUBECTL_VERSION=1.27.10
+RUN curl -LO https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl \
+  && install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 
 COPY .bash_profile /root/
 ENTRYPOINT ["/bin/bash", "-l"]
